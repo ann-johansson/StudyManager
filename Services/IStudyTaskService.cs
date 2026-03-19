@@ -5,8 +5,8 @@ namespace StudyManager.Services
 {
     public interface IStudyTaskService
     {
-        // Här skriver vi bara "rubrikerna" (vad köket ska kunna göra)
-        Task<IEnumerable<StudyTask>> GetAllTasksAsync();
-        Task<StudyTask> AddTaskAsync(TaskCreateDto dto);
+        Task<IEnumerable<StudyTask>> GetAllAsync(string? search);
+
+        Task<StudyTask?> GetByIdAsync(int id);
     }
 }
