@@ -37,5 +37,16 @@ namespace StudyManager.Controllers
 
             return Ok(studyTask);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<TaskCreateDTO>> AddTaskAsyn(TaskCreateDTO createDto)
+        {
+
+
+           var result = await _service.AddTaskAsync(createDto);
+
+
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        }
     }
 }

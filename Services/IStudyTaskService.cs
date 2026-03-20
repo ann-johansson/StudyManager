@@ -8,5 +8,7 @@ namespace StudyManager.Services
         Task<IEnumerable<StudyTask>> GetAllAsync(string? search);
 
         Task<StudyTask?> GetByIdAsync(int id);
+
+        Task<StudyTask> AddTaskAsync(TaskCreateDTO dto);
     }
 }
