@@ -48,5 +48,45 @@ namespace StudyManager.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
+
+        [HttpPut("{id:int}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] bool isCompleted)
+        {
+
+            var updatedTask = await _service.UpdateStatusAsync(id, isCompleted);
+
+            if (updatedTask == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateTask(int id, TaskUpdateDto dto)
+        {
+            var updatedTask = await _service.UpdateTaskAsync(id, dto);
+
+            if (updatedTask == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updatedTask);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            var isDeleted = await _service.DeleteTaskAsync(id);
+
+            if (!isDeleted)
+            {
+                return NotFound();
+            }
+
+            return NoContent(); 
+        }
     }
 }

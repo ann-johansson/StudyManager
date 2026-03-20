@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using StudyManager.Data;
+using StudyManager.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace StudyManager
@@ -20,6 +21,8 @@ namespace StudyManager
             // Register the DbContext with the dependency injection container
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IStudyTaskService, StudyTaskService>();
 
             var app = builder.Build();
 

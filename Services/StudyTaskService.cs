@@ -32,7 +32,7 @@ namespace StudyManager.Services
             return await _context.StudyTasks.FindAsync(id);
         }
 
-        public async Task<TaskCreateDTO> AddTaskAsync(TaskCreateDTO dto)
+        public async Task<StudyTask> AddTaskAsync(TaskCreateDTO dto)
         {
             // Using Mapster to map the DTO to the StudyTask entity
             var newTask = dto.Adapt<StudyTask>();
@@ -42,9 +42,49 @@ namespace StudyManager.Services
             _context.StudyTasks.Add(newTask);
             await _context.SaveChangesAsync();
 
-            var finnished = newTask.Adapt<TaskCreateDTO>();
+            return newTask;
+        }
 
-            return finnished;
+        public async Task<StudyTask?> UpdateStatusAsync(int id, bool isCompleted)
+        {
+            var task = await _context.StudyTasks.FindAsync(id);
+
+            if (task == null)
+            {
+                return null;
+            }
+
+            task.IsCompleted = isCompleted;
+            await _context.SaveChangesAsync();
+
+            return task;
+        }
+
+        public async Task<StudyTask?> UpdateTaskAsync(int id, TaskUpdateDto dto)
+        {
+            var task = await _context.StudyTasks.FindAsync(id);
+
+            if (task == null) return null;
+
+            dto.Adapt(task);
+            await _context.SaveChangesAsync();
+
+            return task;
+        }
+
+        public async Task<bool> DeleteTaskAsync(int id)
+        {
+            var task = await _context.StudyTasks.FindAsync(id);
+
+            if (task == null)
+            {
+                return false;
+            }
+
+            _context.StudyTasks.Remove(task);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

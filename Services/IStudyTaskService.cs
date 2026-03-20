@@ -6,9 +6,10 @@ namespace StudyManager.Services
     public interface IStudyTaskService
     {
         Task<IEnumerable<StudyTask>> GetAllAsync(string? search);
-
         Task<StudyTask?> GetByIdAsync(int id);
-
         Task<StudyTask> AddTaskAsync(TaskCreateDTO dto);
+        Task<StudyTask?> UpdateStatusAsync(int id, bool isCompleted);
+        Task<StudyTask?> UpdateTaskAsync(int id, TaskUpdateDto dto);
+        Task<bool> DeleteTaskAsync(int id);
     }
 }
