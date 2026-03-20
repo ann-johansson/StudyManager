@@ -15,6 +15,19 @@ namespace StudyManager
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            // Add CORS policy to allow requests from any origin
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin()
+                              .AllowAnyMethod()
+                              .AllowAnyHeader();
+                    });
+            });
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -42,6 +55,8 @@ namespace StudyManager
 
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll"); // Apply the CORS policy
 
             app.UseAuthorization();
 
