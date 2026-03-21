@@ -18,7 +18,9 @@ async function fetchTasks()
             taskCard.innerHTML = 
                 `<h3>${task.title}</h3>
                 <p><strong>Subject:</strong> ${task.subject}</p>
-                <p><strong>Status:</strong> ${task.isCompleted ? "Done" : "Pending"}</p>`;
+                <p><strong>Description:</strong> ${task.description || "No description"}</p>
+                <p><strong>Status:</strong> ${task.isCompleted ? "Done" : "Pending"}</p>
+                <button onclick="deleteTask(${task.id})" class="delete-btn">Delete</button>`;
             taskList.appendChild(taskCard);
         });
     }
@@ -59,7 +61,30 @@ taskForm.addEventListener('submit', async (e) => {
             alert("Failed to save task. Check your API.");
         }
     }
-    catch{
+    catch (error) {
         console.error("Error saving task:", error);
     }
 });
+
+async function deleteTask(id) 
+{
+    if(!confirm("Are you sure you want to delete this task?")) {
+        return;
+    }   
+
+    try {
+        const response = await fetch(`${apiUrl}/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            fetchTasks();
+        }
+        else {
+            alert("failed to delete task.");
+        }
+    }
+    catch (error) {
+        console.error("Error deleting task:", error);
+    }
+}
