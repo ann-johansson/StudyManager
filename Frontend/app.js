@@ -19,6 +19,7 @@ async function fetchTasks()
                 `<h3>${task.title}</h3>
                 <p><strong>Subject:</strong> ${task.subject}</p>
                 <p><strong>Description:</strong> ${task.description || "No Description"}</p>
+                <p><strong>Deadline:</strong> ${task.deadline ? task.deadline.split('T')[0] : "No Deadline"}</p>
                 <p><strong>Status:</strong> ${task.isCompleted ? "Done" : "Not Finnished"}</p>
                 <button onclick="toggleStatus(${task.id}, ${task.isCompleted})" class="status-btn">
                     ${task.isCompleted ? "Undo" : "Mark as Done"}
