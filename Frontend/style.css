@@ -3,6 +3,7 @@ body {
     background-color: aquamarine;
     padding: 20px;
 }
+
 .task-card {
     background-color: white;
     border: 1px solid #ddd;
@@ -11,6 +12,7 @@ body {
     margin-bottom: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 #task-form {
     display: flex;
     flex-direction: column;
@@ -37,6 +39,7 @@ body {
 #task-form button:hover {
     background-color: #218838;
 }
+
 .delete-btn {
     background-color: #dc3545;
     color: white;
@@ -49,4 +52,19 @@ body {
 
 .delete-btn:hover {
     background-color: #c82333;
+}
+
+.status-btn {
+    background-color: #007bff; /* Blå färg */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px; /* Ger lite mellanrum till Delete-knappen */
+}
+
+.status-btn:hover {
+    background-color: #0056b3;
 }

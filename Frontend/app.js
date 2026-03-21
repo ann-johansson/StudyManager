@@ -18,8 +18,11 @@ async function fetchTasks()
             taskCard.innerHTML = 
                 `<h3>${task.title}</h3>
                 <p><strong>Subject:</strong> ${task.subject}</p>
-                <p><strong>Description:</strong> ${task.description || "No description"}</p>
-                <p><strong>Status:</strong> ${task.isCompleted ? "Done" : "Pending"}</p>
+                <p><strong>Description:</strong> ${task.description || "No Description"}</p>
+                <p><strong>Status:</strong> ${task.isCompleted ? "Done" : "Not Finnished"}</p>
+                <button onclick="toggleStatus(${task.id}, ${task.isCompleted})" class="status-btn">
+                    ${task.isCompleted ? "Undo" : "Mark as Done"}
+                </button>
                 <button onclick="deleteTask(${task.id})" class="delete-btn">Delete</button>`;
             taskList.appendChild(taskCard);
         });
@@ -86,5 +89,29 @@ async function deleteTask(id)
     }
     catch (error) {
         console.error("Error deleting task:", error);
+    }
+}
+
+async function toggleStatus(id, currentStatus) {
+    const newStatus = !currentStatus;
+
+    try{
+        const response = await fetch(`${apiUrl}/${id}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newStatus)
+        });
+
+        if (response.ok) {
+            fetchTasks();
+        }
+        else {
+            alert("Failed to update Status.");
+        }
+    }
+    catch (error) {
+        console.error("Error updating status:", error);
     }
 }
